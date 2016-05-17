@@ -29,7 +29,7 @@ rawData = [
 ];
 ```
 
-We want an array of objects where the primary keys are the unique dates ('annum') in our raw data.  We'll nest additional objects to each of these dates for the source and target categories. Finally, we'll sum the separate 'value' values in the appropriate raw data fields and plug the results into corresponding values in the formatted data.  We want this sort of result:
+We want an array of objects where the primary objects' keys are the unique dates ('annum') from our raw data.  We'll nest additional objects to each of these dates for the source and target categories. We want the resulting array to resemble this:
 
 ```
 formattedData = [
