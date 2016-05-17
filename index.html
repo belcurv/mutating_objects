@@ -11,7 +11,13 @@
 
 <body ng-controller="mainController">
 
-    <pre> {{ formattedData | json:4 }} </pre>
+<!--    <pre> {{ formattedData | json:4 }} </pre>-->
+    
+    <ol>
+        <li ng-repeat="e in formattedData">
+            <pre>{{e | json:4}}</pre>
+        </li>
+    </ol>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script src="app.js"></script>

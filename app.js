@@ -7867,36 +7867,56 @@
         uniqueTargets = rawData.unique('target').sort();
 
         // report!
-        console.log('Unique dates: '   + uniqueDates.length + '.');
-        console.log('Unique sources: ' + uniqueSources.length + '.');
-        console.log('Unique targets: ' + uniqueTargets.length + '.');
+        console.log('Unique dates: '   + uniqueDates.length);
+        console.log('Unique sources: ' + uniqueSources.length);
+        console.log('Unique targets: ' + uniqueTargets.length);
         // =================== end find unique array elements =================
 
         
         // =================== begin build new formatted array ================
+
+//        // ** Originally built using 3 separate loops **
+//
+//        // * build allTargets object.                               * works *
+//        // * adapts dynamically to source data.
+//        // * init all values to zero; we'll change them later
+//        for (l = 0; l < uniqueTargets.length; l += 1) {
+//            allTargets[uniqueTargets[l]] = 0;
+//        };
+//        
+//        // * build allSources object.                                * works *
+//        // * adapts dynamically to source data.
+//        // * add an allTargets object to each source
+//        for (j = 0; j < uniqueSources.length; j += 1) {
+//            for (l = 0; l < uniqueTargets.length; l += 1) {
+//                allTargets[uniqueTargets[l]] = 0;
+//            };
+//            allSources[uniqueSources[j]] = allTargets;
+//        };
+//        
+//        // * build final array.                                     * works *
+//        // * add an allSources object to each date.
+//        for (i = 0; i < uniqueDates.length; i += 1) {
+//            var dateKey = uniqueDates[i].toString();
+//            var eachDateObject = {};
+//            eachDateObject[dateKey] = allSources;
+//            formattedData.push(eachDateObject);
+//        };
         
-        // * build a targets object.                                  * works *
-        // * adapts dynamically to source data.
-        // * init all values to zero; we'll change them later
-        for (l = 0; l < uniqueTargets.length; l += 1) {
-            allTargets[uniqueTargets[l]] = 0;
-        };
-        
-        // * build sources object.                                    * works *
-        // * adapts dynamically to source data.
-        // * add an allTargets object to each source
-        for (j = 0; j < uniqueSources.length; j += 1) {
-            allSources[uniqueSources[j]] = allTargets;
-        };
-        
-        // * build final array.                                       * works *
-        // * add an allSources object to each date.
+//        // ** all 3 above steps in 1 hairy nested loop **
         for (i = 0; i < uniqueDates.length; i += 1) {
             var dateKey = uniqueDates[i].toString();
             var eachDateObject = {};
+            for (j = 0; j < uniqueSources.length; j += 1) {
+                for (l = 0; l < uniqueTargets.length; l += 1) {
+                    allTargets[uniqueTargets[l]] = 0;
+                };
+                allSources[uniqueSources[j]] = allTargets;
+            };
             eachDateObject[dateKey] = allSources;
             formattedData.push(eachDateObject);
         };
+        
         // =================== end build new formatted array ==================
         
         // bind new array to $scope
