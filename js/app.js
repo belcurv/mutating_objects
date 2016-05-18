@@ -33,6 +33,8 @@
     // ============================= CONTROLLERS ==============================
     app.controller('mainController', ['$scope', 'testFactory', function ($scope, testFactory) {
         
+        $scope.myDate = 0;
+        
         testFactory.getStuff().then(function (results) {
 
             var rawData = [],
@@ -85,21 +87,24 @@
             console.log('Unique dates: '   + uniqueDates.length);
             console.log('Unique sources: ' + uniqueSources.length);
             console.log('Unique targets: ' + uniqueTargets.length);
+//            console.log('Unique dates: '   + uniqueDates);
+//            console.log('Unique sources: ' + uniqueSources);
+//            console.log('Unique targets: ' + uniqueTargets);
             // =================== end find unique array elements =================
 
 
             // =================== begin build new formatted array ================
-            uniqueDates.forEach(function (date) {        // main loop for date objs
-
+            uniqueDates.forEach(function (date, index) {               // main loop
+            
                 var dateKey = date.toString(),         // conv date nums to strings
                     eachDateObject = {};            // init main containing objects
 
                 uniqueSources.forEach(function (source) {   // loop for source objs
-
+                    
                     uniqueTargets.forEach(function (target) {   // loop for targets
-                        allTargets[target] = 0;          // populate allTargets obj
+                        allTargets[target] = index;      // populate allTargets obj
                     });
-
+                    
                     allSources[source] = allTargets;     // populate allSources obj
 
                 });
@@ -111,6 +116,9 @@
 
             // bind new array to $scope
             $scope.formattedData = formattedData;
+            $scope.dateArray  = uniqueDates;
+            $scope.minDate    = uniqueDates[0];
+            $scope.maxDate    = uniqueDates[uniqueDates.length - 1];
         
         });
 
