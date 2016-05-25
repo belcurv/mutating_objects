@@ -60,7 +60,7 @@
                                            min="0" max="{{dateArray.length - 1}}" step="1"
                                            value="0" ng-model="myDate">
                             </p>
-                            <p>Showing: {{ (outputData|filter:dateArray[myDate]).length }} of {{ outputData.length }} total results:</p>
+                            <p>Showing: {{ formattedData[myDate].length }} of {{ rawData.length }} total results:</p>
                             <table class="mdl-data-table mdl-js-data-table">
                                 <thead>
                                     <th class="mdl-data-table__cell--non-numeric">Date index</th>
@@ -90,10 +90,7 @@
                         </div>
 
                         <div class="mdl-card__supporting-text">
-                            {{formattedData[myDate]}}
-                            <ul ng-repeat="data in formattedData[myDate]">
-                                <li>{{data | json:4}}</li>
-                            </ul>
+                            <pre>{{formattedData[myDate] | json:4}}</pre>
 <!--
                             <table class="mdl-data-table
                                           mdl-js-data-table
@@ -139,7 +136,7 @@
 </div>
 
 <!-- scripts -->
-<script src="js/vendor/angular.min.js  "></script>
+<script src="js/vendor/angular.js  "></script>
 <script src="js/vendor/material.min.js "></script>
 <!--<script src="http://d3js.org/d3.v2.js"></script>-->
 <script src="js/vendor/papaparse.min.js"></script>

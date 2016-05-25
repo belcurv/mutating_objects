@@ -31,47 +31,123 @@ rawData = [
 
 We want an array of objects where the primary objects' keys are the unique dates ('annum') from our raw data.  We'll nest additional objects to each of these dates for the source and target categories. We want the resulting array to resemble this:
 
-```
+```javascript
 formattedData = [
     {
-        '1455602400000' : {
-            'BODEGA' : {
-                'APPLE'    : 123,
-                'AVOCADO'  : 123,
-                'BANANA'   : 123,
-                'KIWI'     : 123,
-                'ORANGE'   : 123,
-                'PEAR'     : 123,
-                'TANGERINE': 123 
+        "annum" : "02/05/2015",
+        "sources": [
+            {
+                "name" : "MARKET",
+                "targets" : [
+                    {
+                        "target" : "APPLE",
+                        "sourcerows" : "203995"
+                    },
+                    {
+                        "target" : "AVOCADO",
+                        "sourcerows" : "5439516"
+                    },
+                    {
+                        "target" : "BANANA",
+                        "sourcerows" : "662607"
+                    }
+                ]
             },
-            'CAFE' : {
-                'APPLE'    : 123,
-                'AVOCADO'  : 123,
-                'BANANA'   : 123,
-                'KIWI'     : 123,
-                'ORANGE'   : 123,
-                'PEAR'     : 123,
-                'TANGERINE': 123 
+            {
+                "name" : "BODEGA",
+                "targets" : [
+                    {
+                        "target" : "APPLE",
+                        "sourcerows" : "203995"
+                    },
+                    {
+                        "target" : "AVOCADO",
+                        "sourcerows" : "5439516"
+                    },
+                    {
+                        "target" : "BANANA",
+                        "sourcerows" : "662607"
+                    }
+                ]
             },
-            'CAFETERIA' : {
-                'APPLE'    : 123,
-                'AVOCADO'  : 123,
-                'BANANA'   : 123,
-                'KIWI'     : 123,
-                'ORANGE'   : 123,
-                'PEAR'     : 123,
-                'TANGERINE': 123 
+            {
+                "name" : "CAFETERIA",
+                "targets" : [
+                    {
+                        "target" : "APPLE",
+                        "sourcerows" : "203995"
+                    },
+                    {
+                        "target" : "AVOCADO",
+                        "sourcerows" : "5439516"
+                    },
+                    {
+                        "target" : "BANANA",
+                        "sourcerows" : "662607"
+                    }
+                ]
+            ...
+            }
+        ]
+    },
+    {
+        "annum" : "02/06/2015",
+        "sources": [
+            {
+                "name" : "BODEGA",
+                "targets" : [
+                    {
+                        "target" : "APPLE",
+                        "sourcerows" : "203995"
+                    },
+                    {
+                        "target" : "AVOCADO",
+                        "sourcerows" : "5439516"
+                    },
+                    {
+                        "target" : "BANANA",
+                        "sourcerows" : "662607"
+                    }
+                ]
             },
-            'DISTRIBUTOR' : {
-                'APPLE'    : 123,
-                'AVOCADO'  : 123,
-                'BANANA'   : 123,
-                'KIWI'     : 123,
-                'ORANGE'   : 123,
-                'PEAR'     : 123,
-                'TANGERINE': 123 
+            {
+                "name" : "EPIC",
+                "targets" : [
+                    {
+                        "target" : "APPLE",
+                        "sourcerows" : "203995"
+                    },
+                    {
+                        "target" : "AVOCADO",
+                        "sourcerows" : "5439516"
+                    },
+                    {
+                        "target" : "BANANA",
+                        "sourcerows" : "662607"
+                    }
+                ]
             },
-        }
+            {
+                "name" : "BLAHBLAH",
+                "targets" : [
+                    {
+                        "target" : "APPLE",
+                        "sourcerows" : "203995"
+                    },
+                    {
+                        "target" : "AVOCADO",
+                        "sourcerows" : "5439516"
+                    },
+                    {
+                        "target" : "BANANA",
+                        "sourcerows" : "662607"
+                    }
+                ]
+            ...
+            }
+        ]
     }
-];
+]
 ```
+
+That JSON has generic keys for arrays of nested objects.  Each date has a name ("annum") and an array of sources ("sources").  Each element in the "sources" array has a name ("name") and an array of targets ("targets").  Each element in the "targets" array is an object with a name ("target") and value ("sourcerows").

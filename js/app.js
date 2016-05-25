@@ -57,21 +57,12 @@
             // ===================== end type conversion ======================
    
             // ================== begin find unique array elements ================
-            Array.prototype.contains = function (v) {
-                var i;
-                for (i = 0; i < this.length; i += 1) {
-                    if (this[i] === v) {
-                        return true;
-                    }
-                }
-                return false;
-            };
 
             Array.prototype.unique = function (myQuery) {
                 var i,
                     arr = [];
                 for (i = 0; i < this.length; i += 1) {
-                    if (!arr.contains(this[i][myQuery])) {
+                    if (arr.indexOf(this[i][myQuery]) === -1) {
                         arr.push(this[i][myQuery]);
                     }
                 }
@@ -94,28 +85,57 @@
 
 
             // =================== begin build new formatted array ================
-            uniqueDates.forEach(function (date, index) {               // main loop
+//            uniqueDates.forEach(function (date, index) {               // main loop
+//            
+//                var dateKey = date.toString(),         // conv date nums to strings
+//                    eachDateObject = {};            // init main containing objects
+//
+//                uniqueSources.forEach(function (source) {   // loop for source objs
+//                    
+//                    uniqueTargets.forEach(function (target) {   // loop for targets
+//                        allTargets[target] = index;      // populate allTargets obj
+//                    });
+//                    
+//                    allSources[source] = allTargets;     // populate allSources obj
+//
+//                });
+//
+//                eachDateObject[dateKey] = allSources;       // populate main object
+//                formattedData.push(eachDateObject);    // push main object to array
+//            });
             
-                var dateKey = date.toString(),         // conv date nums to strings
-                    eachDateObject = {};            // init main containing objects
+            //  loop over unique dates array
+            uniqueDates.forEach(function (date, index) {
 
-                uniqueSources.forEach(function (source) {   // loop for source objs
-                    
-                    uniqueTargets.forEach(function (target) {   // loop for targets
-                        allTargets[target] = index;      // populate allTargets obj
-                    });
-                    
-                    allSources[source] = allTargets;     // populate allSources obj
+                // create temp date object to collect sources
+                var dateObj = {[date] : {}};
 
+                // loop over entire 'rawData' object
+                rawData.forEach(function (element) {
+
+                    // if date object not have 'source' object, add it
+                    if (!dateObj[date][element.source]) {
+                        dateObj[date][element.source] = {};
+                    }
+
+                    // if results date property matches main loop's 'date' property...
+                    if (element.annum === date) {
+
+                        // populate source object with results target & value
+                        dateObj[date][element.source][element.target] = element.value;
+
+                    }
                 });
-
-                eachDateObject[dateKey] = allSources;       // populate main object
-                formattedData.push(eachDateObject);    // push main object to array
+                
+                // push populated date object to output array
+                formattedData.push(dateObj);
+                
             });
             // =================== end build new formatted array ==================
 
             // bind new array to $scope
             $scope.formattedData = formattedData;
+            $scope.rawData    = rawData;
             $scope.dateArray  = uniqueDates;
             $scope.minDate    = uniqueDates[0];
             $scope.maxDate    = uniqueDates[uniqueDates.length - 1];
