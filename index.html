@@ -43,15 +43,8 @@
                 <!-- INTRODUCTION -->
                 <div id="top" class="mdl-cell mdl-cell--12-col">
                     <div class="mdl-card mdl-shadow--4dp mdl-card-wide">
-                        <div class="mdl-card__title">
-                            <h3 class="mdl-card__title-text">
-                                What's the Point of this?
-                            </h3>
-                        </div>
 
                         <div class="mdl-card__supporting-text">
-                            <p>This app reads in a remote CSV file via XHR, parses the file using Papaparse, formats the results, outputs the contents as a table and raw JSON.  A HTML5 input/range slider is used to filter the results by specific dates.</p>
-                        
                             <p>Total range of dataset: {{minDate | date}} - {{maxDate | date}}</p>
                             <p>Drag to filter on specific dates:</p>
                             <p>
@@ -60,11 +53,10 @@
                                            min="0" max="{{dateArray.length - 1}}" step="1"
                                            value="0" ng-model="myDate">
                             </p>
-                            <p>Showing: {{ formattedData[myDate].length }} of {{ rawData.length }} total results:</p>
                             <table class="mdl-data-table mdl-js-data-table">
                                 <thead>
                                     <th class="mdl-data-table__cell--non-numeric">Date index</th>
-                                    <th class="mdl-data-table__cell--non-numeric">Javascript Date</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Unix Epoch Time</th>
                                     <th class="mdl-data-table__cell--non-numeric">Formatted Date</th>
                                 </thead>
                                 <tbody>
@@ -90,8 +82,6 @@
                         </div>
 
                         <div class="mdl-card__supporting-text">
-                            <pre>{{formattedData[myDate] | json:4}}</pre>
-<!--
                             <table class="mdl-data-table
                                           mdl-js-data-table
                                           table-wide">
@@ -102,30 +92,45 @@
                                     <th>Annum</th>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="data in formattedData | filter:formattedData[myDate] | orderBy:'source'">
-                                        <td class="mdl-data-table__cell--non-numeric">{{data.source}}</td>
-                                        <td class="mdl-data-table__cell--non-numeric">{{data.target}}</td>
-                                        <td>{{data.value}}</td>
-                                        <td>{{data.annum | date}}</td>
+                                    <tr ng-repeat="row in rawData | filter:dateArray[myDate] | orderBy:'source'">
+                                        <td class="mdl-data-table__cell--non-numeric">{{row.source}}</td>
+                                        <td class="mdl-data-table__cell--non-numeric">{{row.target}}</td>
+                                        <td>{{row.value}}</td>
+                                        <td>{{row.annum | date}}</td>
                                     </tr>
                                 </tbody>
                             </table>
--->
                         </div>
                     </div>
                 </div>
                 
-                <!-- OUTPUT AS JSON -->
-                <div id="json" class="mdl-cell mdl-cell--12-col">
+                <!-- INPUT ARRAY FORMAT -->
+                <div id="json" class="mdl-cell mdl-cell--6-col">
                     <div class="mdl-card mdl-shadow--4dp mdl-card-wide">
                         <div class="mdl-card__title">
                             <h3 class="mdl-card__title-text">
-                                In the raw...
+                                Filtered input array...
                             </h3>
                         </div>
 
                         <div class="mdl-card__supporting-text">
-                            <pre>{{ formattedData | json:4 }}</pre>
+                            <pre ng-repeat="raw in rawData | filter:dateArray[myDate]">{{ raw | json:4 }}
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- OUTPUT FORMATTED JSON -->
+                <div class="mdl-cell mdl-cell--6-col">
+                    <div class="mdl-card mdl-shadow--4dp mdl-card-wide">
+                        <div class="mdl-card__title">
+                            <h3 class="mdl-card__title-text">
+                                Filtered and formatted JSON output...
+                            </h3>
+                        </div>
+
+                        <div class="mdl-card__supporting-text">
+                            <pre>{{ formattedData[myDate] | json:4 }}</pre>
                         </div>
                     </div>
                 </div>
